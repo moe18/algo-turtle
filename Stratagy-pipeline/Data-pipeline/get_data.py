@@ -1,6 +1,7 @@
 import pandas as pd
 from yahooquery import Ticker
 
+
 class GetFinData:
     """
     Get any type of fin data, for example
