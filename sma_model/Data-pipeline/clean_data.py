@@ -13,6 +13,27 @@ class CleanFinData:
         self.data = pd.DataFrame()
 
     @staticmethod
+    def get_daily_vol(close, span=100):
+        """
+        daily vol, reindexed to close
+        :param close: close price pd Series
+        :param span: the days the exponential weighted moving std look back
+        :return: the ewm std of a stocks returns
+        """
+        df0 = close.index.searchsorted(close.index-pd.Timedelta(days=1))
+        df0 = df0[df0 > 0]
+        df0 = pd.Series(close.index[df0-1], index=close.index[close.shape[0]-df0.shape[0]:])
+
+        # day return
+        df0 = close.loc[df0.index]/close.loc[df0.values].values-1
+        df0 = df0.ewm(span=span).std()
+        return df0
+
+
+
+
+
+    @staticmethod
     def bar(xs, y):
         return np.int64(xs / y) * y
 

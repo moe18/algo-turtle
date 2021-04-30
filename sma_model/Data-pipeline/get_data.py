@@ -21,7 +21,8 @@ class GetFinData:
         self.tickers = Ticker(self.stocks, asynchronous=True)
 
     def get_hist_data_yahoo(self, period='1y', interval='1d'):
-        hist_data = self.tickers.history(period='1y', interval='1d')
+        ticker = Ticker(self.stocks, asynchronous=True)
+        hist_data = ticker.history(period=period, interval=interval)
         return hist_data
 
     def get_hist_data_by_date_yahoo(self):
